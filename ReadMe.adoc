@@ -22,14 +22,14 @@ Upload the code contained in this sketch on to your board
 === Folder structure
 
 ....
- sketch123                => Arduino sketch folder
+ SerialControlAnalogOutput                => Arduino sketch folder
   ├── SerialControlAnalogOutput.ino       => main Arduino file
-  ├── layout.png          => (optional) an image of the layout
+  ├── layout.png          => an image of the layout
   └── ReadMe.adoc         => this file
 ....
 
 === License
-This project is released under a GNU GPL License.
+This project is released under a GNU GPLv3 License.
 
 === Contributing
 To contribute to this project please contact DocQuantik https://id.arduino.cc/DocQuantik
@@ -38,9 +38,12 @@ To contribute to this project please contact DocQuantik https://id.arduino.cc/Do
 This is the material list needed for the project
 
 |===
-| ID | Part name      | Part number | Quantity
-| R1 | 10k Resistor   | 1234-abcd   | 10
-| L1 | Red LED        | 2345-asdf   | 5
-| A1 | Arduino Zero   | ABX00066    | 1
+| ID | Part name                | Part number | Quantity
+| R1 | 470 Resistor             |             | 6
+| C1 | 10 uF Capacitor          |             | 3
+| R2 | 5k Adjustable resistor   |             | 3
+| AO1 | Dual channel op-amp     | LM358N      | 2
+| B1 | Female BNC connector     |             | 6
+| A1 | Arduino UNO              | A000066     | 1
 |===
 
