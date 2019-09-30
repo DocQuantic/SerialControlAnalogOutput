@@ -13,6 +13,8 @@ This project uses an Arduino to create a 6 outputs board composed of:
 - 2 analog outputs 0-10V  
 - 1 analog output 0-5V  
 
+The output value of each channel can be controlled via the serial input of the Arduino.
+
 == Step 1: Installation
 To install this project, you just have to assemble the circuit and upload the code as described in the next parts.
 
