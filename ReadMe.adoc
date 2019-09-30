@@ -6,7 +6,14 @@
 
 = Project: Arduino Control Board
 
-Describe your project
+This project uses an Arduino to create a 6 outputs board composed of:  
+
+- 2 digital outputs 0-5V  
+- 1 digital output 0-10V  
+- 2 analog outputs 0-10V  
+- 1 analog output 0-5V  
+
+The output value of each channel can be controlled via the serial input of the Arduino.
 
 == Step 1: Installation
 To install this project, you just have to assemble the circuit and upload the code as described in the next parts.
@@ -24,8 +31,8 @@ Upload the code contained in this sketch on to your board
 ....
  SerialControlAnalogOutput                => Arduino sketch folder
   ├── SerialControlAnalogOutput.ino       => main Arduino file
-  ├── layout.png          => an image of the layout
-  └── ReadMe.adoc         => this file
+  ├── layout.png                          => an image of the layout
+  └── ReadMe.adoc                         => this file
 ....
 
 === License
@@ -42,8 +49,8 @@ This is the material list needed for the project
 | R1 | 470 Resistor             |             | 6
 | C1 | 10 uF Capacitor          |             | 3
 | R2 | 5k Adjustable resistor   |             | 3
-| AO1 | Dual channel op-amp     | LM358N      | 2
-| B1 | Female BNC connector     |             | 6
+| U1 | Dual channel op-amp      | LM358N      | 2
+| U2 | Female BNC connector     |             | 6
 | A1 | Arduino UNO              | A000066     | 1
 |===
 
