@@ -17,7 +17,7 @@ Created by William Magrini on 2019/04/15
 #define pin488 3 //Pin number for 488 nm laser PWM output (channel 1)
 #define pin561 5 //Pin number for 561 nm laser PWM output (channel 2)
 #define blankPin 2 //Pin number for blanking digital output (channel 3)
-#define switch405Pin 4 //Pin number for switching 405nm laser digital output (channel 4)
+#define interlockPin 4 //Pin number for switching 405nm laser digital output (channel 4)
 #define shutterPin 7 //Pin number for shutter control digital output (channel 5)
 
 #define startDelimiter '<' //Start delimiter for the chain to read
@@ -29,6 +29,8 @@ byte frequencyDivider = 0x01; //Frequency divider to obtain the maximum frequenc
 String stringPower; //String that will contain the laser power amount
 String stringChannel; //String that will contain the channel to affect
 
+bool currentInterlockState; //Determines if the shutter at the output of the laser bench can be opened.
+bool previousInterlockState; //Stores the value of the las interlock state.
 bool isAnalog; //Determines whether the selected channel is analog or not
 int analogValue = 0; //Output value for the selected analog channel
 int digitalValue = LOW; //Output value of the selected digital channel
@@ -44,7 +46,7 @@ void setup() {
   pinMode(pin488, OUTPUT); //Set the 488 nm laser pin
   pinMode(pin561, OUTPUT); //Set the 561 nm laser pin
   pinMode(blankPin, OUTPUT); //Set the blanking pin
-  pinMode(switch405Pin, OUTPUT); //Set the 405 switch pin
+  pinMode(interlockPin, INPUT); //Set the 405 switch pin
   pinMode(shutterPin, OUTPUT); //Set the shutter pin
   
   TCCR0B = TCCR0B & 0b11111000 | frequencyDivider; //Set the PWM frequency to its maximum for pins 5 and 6
@@ -54,8 +56,10 @@ void setup() {
   analogWrite(pin488, 0); //Initialize the output values
   analogWrite(pin561, 0); //Initialize the output values
   digitalWrite(blankPin, LOW); //Initialize the output values
-  digitalWrite(switch405Pin, LOW); //Initialize the output values
   digitalWrite(shutterPin, LOW); //Initialize the output values
+
+  currentInterlockState = digitalRead(interlockPin);
+  previousInterlockState = currentInterlockState;
   
   Serial.println("Ready"); //Print "Ready" once
 }
@@ -83,10 +87,6 @@ void setPWMOutput(String channel, String value){
       isAnalog = false;
       break;
     case 4:
-      selectChannel = switch405Pin;
-      isAnalog = false;
-      break;
-    case 5:
       selectChannel = shutterPin;
       isAnalog = false;
       break;
@@ -135,6 +135,16 @@ void processInput(){
 }
 
 void loop() {  
+  currentInterlockState = digitalRead(interlockPin);
+  if(currentInterlockState != previousInterlockState){
+    if(currentInterlockState){
+      Serial.println("true");
+    }
+    else{
+      Serial.println("false");
+    }
+    previousInterlockState = currentInterlockState;
+  }
   if(Serial.available()){ //Only send data back if data has been sent
     processInput(); //Read and process the input serial values
   }
